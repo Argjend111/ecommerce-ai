@@ -1,12 +1,23 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import React from 'react'
 
-function Layout({ children }: { children: React.ReactNode }) {
+function AppLayout({ children }: { children: React.ReactNode }) {
     return (
         <ClerkProvider>
-            <div>{children}</div>
+            <CartStoreProvider>
+                <ChatStoreProvider>
+                    <AppShell>
+                        <Header />
+                        <main>{children}</main>
+                    </AppShell>
+                    <CartSheet />
+                    <ChatSheet />
+                    <Toaster position="bottom-right" />
+                    <SanityLive />
+                </ChatStoreProvider>
+            </CartStoreProvider>
         </ClerkProvider>
     )
 }
 
-export default Layout
+export default AppLayout
