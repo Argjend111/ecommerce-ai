@@ -15,13 +15,13 @@ import {
   defaultInitState,
 } from "./cart-store";
 
-// Store API type
+
 export type CartStoreApi = ReturnType<typeof createCartStore>;
 
-// Context
+
 const CartStoreContext = createContext<CartStoreApi | undefined>(undefined);
 
-// Provider props
+
 interface CartStoreProviderProps {
   children: ReactNode;
   initialState?: CartState;
@@ -43,8 +43,6 @@ export const CartStoreProvider = ({
     storeRef.current = createCartStore(initialState ?? defaultInitState);
   }
 
-  // Manually trigger rehydration on the client after mount
-  // This prevents SSR hydration mismatches since localStorage isn't available on server
   useEffect(() => {
     storeRef.current?.persist.rehydrate();
   }, []);
@@ -56,11 +54,6 @@ export const CartStoreProvider = ({
   );
 };
 
-/**
- * Hook to access the cart store with a selector
- * Must be used within CartStoreProvider
- * Handles SSR by returning default state until hydrated
- */
 export const useCartStore = <T,>(selector: (store: CartStore) => T): T => {
   const cartStoreContext = useContext(CartStoreContext);
 
@@ -71,48 +64,26 @@ export const useCartStore = <T,>(selector: (store: CartStore) => T): T => {
   return useStore(cartStoreContext, selector);
 };
 
-// ============================================
-// Convenience Hooks
-// ============================================
-
-/**
- * Get all cart items
- */
 export const useCartItems = () => useCartStore((state) => state.items);
 
-/**
- * Get cart open state
- */
 export const useCartIsOpen = () => useCartStore((state) => state.isOpen);
 
-/**
- * Get total number of items in cart
- */
+
 export const useTotalItems = () =>
   useCartStore((state) =>
     state.items.reduce((sum, item) => sum + item.quantity, 0),
   );
 
-/**
- * Get total price of cart
- */
 export const useTotalPrice = () =>
   useCartStore((state) =>
     state.items.reduce((sum, item) => sum + item.price * item.quantity, 0),
   );
 
-/**
- * Find a specific item in cart
- */
 export const useCartItem = (productId: string) =>
   useCartStore((state) =>
     state.items.find((item) => item.productId === productId),
   );
 
-/**
- * Get all cart actions
- * Actions are stable references from zustand, safe to destructure
- */
 export const useCartActions = () => {
   const addItem = useCartStore((state) => state.addItem);
   const removeItem = useCartStore((state) => state.removeItem);

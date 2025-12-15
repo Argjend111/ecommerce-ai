@@ -1,7 +1,6 @@
 import { createStore } from "zustand/vanilla";
 import { persist } from "zustand/middleware";
 
-// Types
 export interface CartItem {
   productId: string;
   name: string;
@@ -27,7 +26,7 @@ export interface CartActions {
 
 export type CartStore = CartState & CartActions;
 
-// Default state
+
 export const defaultInitState: CartState = {
   items: [],
   isOpen: false,
@@ -87,9 +86,9 @@ export const createCartStore = (initState: CartState = defaultInitState) => {
       }),
       {
         name: "cart-storage",
-        // Skip automatic hydration - we'll trigger it manually on the client
+       
         skipHydration: true,
-        // Only persist items, not UI state like isOpen
+       
         partialize: (state) => ({ items: state.items }),
       }
     )

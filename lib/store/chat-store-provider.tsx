@@ -1,6 +1,6 @@
 import { createStore } from "zustand/vanilla";
 
-// Types
+
 export interface ChatState {
   isOpen: boolean;
   pendingMessage: string | null;
@@ -16,17 +16,12 @@ export interface ChatActions {
 
 export type ChatStore = ChatState & ChatActions;
 
-// Default state
+
 export const defaultInitState: ChatState = {
   isOpen: false,
   pendingMessage: null,
 };
 
-/**
- * Chat store factory - creates new store instance per provider
- * Simple store for managing chat sheet visibility
- * No persistence needed - chat should start closed on page load
- */
 export const createChatStore = (initState: ChatState = defaultInitState) => {
   return createStore<ChatStore>()((set) => ({
     ...initState,
