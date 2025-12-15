@@ -1,6 +1,6 @@
 import { BasketIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { ORDER_STATUS_SANITY_LIST } from "@/lib/constants/orderStatus";
+import { ORDER_STATUS_SANITY_LIST } from "../../lib/constants/orderStatus"
 
 export const orderType = defineType({
   name: "order",
