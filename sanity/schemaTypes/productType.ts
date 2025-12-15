@@ -3,7 +3,7 @@ import { defineField, defineType } from "sanity";
 import {
   MATERIALS_SANITY_LIST,
   COLORS_SANITY_LIST,
-} from "../../lib/constants/filter"
+} from "../../lib/constants/filters"
 
 export const productType = defineType({
   name: "product",
