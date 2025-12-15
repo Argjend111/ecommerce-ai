@@ -44,7 +44,6 @@ These are the baseline expectations that Sanity’s engineers have had while dev
 If you’ve built an SSR front end with Sanity before (such as in Next.js), you’ve likely created a Sanity Client and fetched all on-page content in a single query like this.
 
 ```tsx
-// The SSR way: query and render "event" type documents
 
 import { client } from "../sanity/client";
 
@@ -70,8 +69,6 @@ This can work great for SSR apps—where only the initial page load is important
 Your natural inclination may be to use the App SDK hooks to recreate the "fetch everything in one query" pattern.
 
 ```tsx
-// ❌ Do not simply swap client.fetch for useQuery
-// It's too easy to over-fetch!
 
 import { useQuery } from "@sanity/sdk-react";
 
@@ -111,7 +108,6 @@ In most cases, you should prefer `useDocuments` to fetch a list of document hand
 Here's an example of fetching and rendering the same documents using the App SDK’s more purpose-built hooks.
 
 ```tsx
-// ✅ Fetch and render event type documents the App SDK way
 
 import { Suspense } from "react";
 import {
@@ -120,7 +116,6 @@ import {
   type DocumentHandle,
 } from "@sanity/sdk-react";
 
-// Parent component that queries and renders event documents
 export function EventsList() {
   const { data: events } = useDocuments({
     documentType: 'event',
@@ -160,13 +155,11 @@ Rest assured that in a custom app, this is acceptable and in fact the intended u
 [Suspense](https://react.dev/reference/react/Suspense) may be an unfamiliar part of the React library to many developers, but it won’t be once you’re familiar with the App SDK. The hooks in the App SDK use Suspense for data fetching—this means that when fetches are in flight, React will navigate up the component “tree” to the nearest Suspense boundary and trigger its `fallback` prop.
 
 ```tsx
-// A very simple example of using Suspense
 
 import { useDocuments } from "@sanity/sdk-react"
 import { Stack, Text } from "@sanity/ui"
 import { Suspense } from "react"
 
-// 👇 The `useDocuments` hook in this component returns a promise
 function FeedbackListDocuments() {
   const { data } = useDocuments({
     documentType: "feedback",
@@ -181,8 +174,6 @@ function FeedbackListDocuments() {
   )
 }
 
-// 👇 So the component must be wrapped in Suspense
-// which will render the `fallback` prop until data is loaded
 function FeedbackList() {
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
@@ -215,8 +206,6 @@ import { Suspense } from "react"
 import { type DocumentHandle, useDocuments } from "@sanity/sdk-react"
 import { Stack, Button } from "@sanity/ui"
 
-// 👇 This component needs to be wrapped in Suspense
-// because it contains a fetching hook
 export function FeedbackList() {
   const { data, hasMore, loadMore } = useDocuments({
     documentType: "feedback",
@@ -225,8 +214,7 @@ export function FeedbackList() {
   return (
     <Stack space={2} padding={5}>
       {data?.map((feedback) => (
-        // 👇 Just like FeedbackItem needs to be wrapped
-        // because it does its own data fetching too
+
         <Suspense key={feedback.documentId}>
           <FeedbackItem {...feedback} />
         </Suspense>
@@ -277,12 +265,10 @@ export function OpenInStudio({ handle }: OpenInStudioProps) {
   )
 }
 
-// The fallback component, rendered while the final component is loading
 function OpenInStudioFallback() {
   return <Button text={BUTTON_TEXT} disabled />
 }
 
-// The final component, rendered after the fallback
 function OpenInStudioButton({ handle }: OpenInStudioProps) {
   const { navigateToStudioDocument } = useNavigateToStudioDocument(handle)
 
@@ -303,8 +289,6 @@ So within the one component, we have:
 A good rule to keep in mind is that each component should only have one instance of a hook that fetches content (such as `useDocuments` or `useDocumentProjection`)
 
 ```tsx
-// ❌ Don't put multiple fetchers in a single component!
-// Updates to either list of documents will rerender both lists.
 
 import { useDocuments } from "@sanity/sdk-react";
 import { List } from "./List";
@@ -332,13 +316,11 @@ export function EventsAndVenues() {
 It’s possible to use multiple fetching hooks in a single component, but any one of these that receive an update will cause React to look up the component tree for a Suspense boundary, putting the entire component (and maybe others) into a loading state.
 
 ```tsx
-// ✅ Separate fetchers into their own list components
 
 import { Suspense } from 'react'
 import { useDocuments } from '@sanity/react-sdk'
 import { List } from './List'
 
-// Component that renders two independent document lists
 export function EventsAndVenues() {
   return (
     <>
@@ -353,7 +335,6 @@ export function EventsAndVenues() {
   )
 }
 
-// Reusable component to fetch and render a list of documents by type
 function DocumentListSection({ documentType }: { documentType: string }) {
   const { data: items } = useDocuments({ documentType })
 
@@ -374,8 +355,7 @@ Real-time applications require values to be up to date in **all** browsers. Ther
 For as long as you’ve been building React applications with hooks, you’ve likely implemented forms with controlled inputs where the `useState` hook stores, writes and renders the value of a field and content is submitted upon completion.
 
 ```tsx
-// ❌ Do not copy this code example! 
-// It only writes values to the browser, not the Content Lake
+
 
 import { useState, FormEvent } from "react";
 import { useEditDocument, type DocumentHandle } from "@sanity/sdk-react";
@@ -384,7 +364,6 @@ export function TitleForm(props: DocumentHandle) {
   const [value, setValue] = useState("");
   const editTitle = useEditDocument({ ...props, path: "title" });
 
-  // 😱 This edit will only happen on submission
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
     editTitle(value);
@@ -394,7 +373,6 @@ export function TitleForm(props: DocumentHandle) {
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        // 😱 This value only exists in your browser!
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Enter title"
@@ -412,7 +390,6 @@ In a real-time application this leads to stale data in an author's browser, and 
 Hooks in the App SDK have been written to handle the local-first optimistic edits seen in `useState`, while sending and receiving mutations to the Content Lake behind the scenes. This is why you’ll see `useDocument` and `useEditDocument` combined in a pattern like the one below, to achieve the same effect as demonstrated in the incorrect example above.
 
 ```tsx
-// ✅ Read from and write values directly to the document
 
 import { useDocument, useEditDocument, type DocumentHandle } from '@sanity/react-sdk'
 

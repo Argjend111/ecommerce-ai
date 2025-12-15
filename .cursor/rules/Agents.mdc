@@ -37,7 +37,6 @@ Unless explicitly modelling web pages or app views, model content that describes
 - CONSIDER the order of fields, from most important and relevant first, to least often used last
 
 ```ts
-// ./src/schemaTypes/lessonType.ts
 
 import { defineField, defineType } from "sanity";
 
@@ -64,7 +63,6 @@ export const lessonType = defineType({
 - If a schema type has input components, they should be colocated with the schema type file. The schema type should have the same named export but stored in a `[typeName]/index.ts` file:
 
 ```ts
-// ./src/schemaTypes/seoType/index.ts
 
 import { defineField, defineType } from "sanity";
 
@@ -75,7 +73,6 @@ export const seoType = defineType({
   title: "SEO",
   type: "object",
   components: { input: seoInput },
-  // ...
 });
 ```
 
@@ -84,7 +81,6 @@ export const seoType = defineType({
 Any field type that can be reused in multiple document types should be registered as its own custom schema type.
 
 ```ts
-// ./src/schemaTypes/blockContentType.ts
 
 import { defineField, defineType } from "sanity";
 
@@ -114,7 +110,6 @@ Every `document` and `object` schema type should:
 - Use `.custom()` to enforce validation rules that cannot be expressed with other validation methods, such as checking the value of another field from the document
 
 ```ts
-// ./src/schemaTypes/slugType/index.ts
 
 import { defineField, defineType } from "sanity";
 
@@ -130,7 +125,6 @@ export const slugType = defineType({
     ),
     Rule.required().error("Required to generate a URL"),
   ],
-  // ...
 });
 ```
 
@@ -141,11 +135,8 @@ After making changes to schema or studio configuration, test the configuration w
 Add these scripts to `package.json` to test the Studio configuration:
 
 ```json
-// package.json
 {
-  // existing configuration...
   "scripts": {
-    // existing scripts...
     "typegen": "sanity schema extract && sanity typegen generate --enforce-required-fields",
     "typecheck": "tsc --noEmit"
   }
@@ -190,7 +181,6 @@ If you do not have the Sanity MCP server installed:
   -- DO NOT insert dynamic values using string interpolation
 
 ```ts
-// ✅ Good GROQ query example
 import { defineQuery } from "groq";
 
 export const POST_QUERY = defineQuery(`*[
@@ -225,7 +215,6 @@ your-project/
 - ALWAYS create a TypeGen configuration file:
 
 ```json
-// apps/studio/sanity-typegen.json
 {
   "path": "./**/*.{ts,tsx,js,jsx}",
   "schema": "./<front-end-folder>/sanity/extract.json",

@@ -83,13 +83,11 @@ If you need this level of configuration, create a TypeGen configuration file (`s
 **sanity-typegen.json**
 
 ```json
-// sanity-typegen.json
 {
   "unstable_schemas": [
     {
       // Path to the schema
       "schemaPath": "./schemas/products-schema.json",
-      // The schema ID, formatted as `projectId.datasetName`
       "schemaId": "your-project-id.products"
     },
     {
@@ -98,9 +96,7 @@ If you need this level of configuration, create a TypeGen configuration file (`s
     }
     // Add more schema objects if needed
   ],
-  "overloadClientMethods": false // client methods are not needed for the App SDK
-  // Optional: Specify output path for generated types
-  // "outputPath": "./src/generated/sanity-types.ts"
+  "overloadClientMethods": false 
 }
 ```
 
@@ -163,17 +159,15 @@ const prodHandle = createDocumentHandle({
   projectId: 'your-project-id',
   dataset: 'production',
   documentId: 'another-id',
-  documentType: 'dog', // Type narrowed to 'dog'
+  documentType: 'dog', 
 })
 
 function MyComponent() {
   const {data: bookData} = useDocument(testHandle)
-  // bookData is correctly typed as Book
+ 
 
   const {data: dogData} = useDocument(prodHandle)
-  // dogData is correctly typed as Dog
-
-  // ...
+ 
 }
 ```
 
@@ -188,7 +182,7 @@ The App SDK provides helper functions (like `createDocumentHandle `and `createDa
 ```
 import {createDocumentHandle} from '@sanity/sdk'
 
-// Using the helper ensures handle.documentType is typed as 'book'
+ typed as 'book'
 const handle = createDocumentHandle({
   documentId: '123',
   documentType: 'book',
@@ -207,7 +201,7 @@ const handle = {
   documentType: 'book',
   dataset: 'production',
   projectId: 'abc',
-} as const // 'as const' ensures documentType is 'book', not string
+} as const  'book', not string
 ```
 
 > [!TIP]
@@ -223,7 +217,7 @@ To get types for GROQ projections used with `useDocumentProjection` and TypeGen,
 import {defineProjection} from 'groq'
 import {useDocumentProjection, type DocumentHandle} from '@sanity/sdk-react'
 
-// Typegen derives the type name (AuthorSummaryProjectionResult) from the variable name
+ (AuthorSummaryProjectionResult) from the variable name
 export const authorSummary = defineProjection(`{
   "name": name,
   "favoriteBookTitles": favoriteBooks[]->title,
@@ -236,8 +230,7 @@ function AuthorDetails({doc}: {doc: DocumentHandle<'author'>}) {
     projection: authorProjection,
   })
 
-  // data is typed as AuthorSummaryProjectionResult
-  // Autocompletion works for data.name and data.favoriteBookTitles
+favoriteBookTitles
   return <div>{data.name}</div>
 }
 ```
