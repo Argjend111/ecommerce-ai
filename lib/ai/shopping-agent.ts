@@ -196,5 +196,8 @@ export function createShoppingAgent({ userId }: ShoppingAgentOptions) {
     tools.getMyOrders = getMyOrdersTool;
   }
 
-
+  return {
+    instructions,
+    tools,
+  };
 }
