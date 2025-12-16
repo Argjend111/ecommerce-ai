@@ -27,12 +27,6 @@ interface CartStoreProviderProps {
   initialState?: CartState;
 }
 
-/**
- * Cart store provider - creates one store instance per provider
- * Manually triggers rehydration from localStorage on the client
- * Wrap your app/(app) layout with this provider
- * @see https://zustand.docs.pmnd.rs/guides/nextjs#hydration-and-asynchronous-storages
- */
 export const CartStoreProvider = ({
   children,
   initialState,

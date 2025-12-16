@@ -32,11 +32,6 @@ export const defaultInitState: CartState = {
   isOpen: false,
 };
 
-/**
- * Cart store factory - creates new store instance per provider
- * Uses persist middleware with skipHydration for Next.js SSR compatibility
- * @see https://zustand.docs.pmnd.rs/guides/nextjs#hydration-and-asynchronous-storages
- */
 export const createCartStore = (initState: CartState = defaultInitState) => {
   return createStore<CartStore>()(
     persist(

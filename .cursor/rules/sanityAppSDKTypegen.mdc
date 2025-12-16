@@ -86,7 +86,7 @@ If you need this level of configuration, create a TypeGen configuration file (`s
 {
   "unstable_schemas": [
     {
-      // Path to the schema
+
       "schemaPath": "./schemas/products-schema.json",
       "schemaId": "your-project-id.products"
     },
@@ -94,7 +94,6 @@ If you need this level of configuration, create a TypeGen configuration file (`s
       "schemaPath": "./schemas/authors-schema.json",
       "schemaId": "your-project-id.authors"
     }
-    // Add more schema objects if needed
   ],
   "overloadClientMethods": false 
 }
@@ -116,7 +115,7 @@ With the necessary packages installed and your schema(s) extracted (and optional
 **Terminal**
 
 ```sh
-# use `@sanity/cli` package directly for now
+
 ./node_modules/@sanity/cli/bin/sanity typegen generate
 ```
 

@@ -134,7 +134,6 @@ export function EventsList() {
   );
 }
 
-// Event component now renders the <li> itself
 function Event(props: DocumentHandle) {
   const { data } = useDocumentProjection({ ...props, projection: `{ title }` });
 
