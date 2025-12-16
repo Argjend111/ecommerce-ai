@@ -4,6 +4,7 @@ import { SanityLive } from "@/sanity/lib/live";
 import { Toaster } from "sonner";
 import { Header } from "@/components/app/Header";
 import { ChatStoreProvider } from "@/lib/store/chat-store-provider";
+import { CartSheet } from "@/components/app/CartSheet";
 
 
 function AppLayout({ children }: { children: React.ReactNode }) {
@@ -13,6 +14,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
         <ChatStoreProvider>
           <Header />
           <main>{children}</main>
+          <CartSheet/>
           <Toaster position="bottom-center"/>
           <SanityLive />
         </ChatStoreProvider>
