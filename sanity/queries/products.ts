@@ -182,26 +182,14 @@ export const SEARCH_PRODUCTS_QUERY = defineQuery(`*[
   stock
 }`);
 
-/**
- * Filter products - ordered by name (A-Z)
- * Returns up to 4 images for hover preview in product cards
- */
 export const FILTER_PRODUCTS_BY_NAME_QUERY = defineQuery(
   `*[${PRODUCT_FILTER_CONDITIONS}] | order(name asc) ${FILTERED_PRODUCT_PROJECTION}`
 );
 
-/**
- * Filter products - ordered by price ascending
- * Returns up to 4 images for hover preview in product cards
- */
 export const FILTER_PRODUCTS_BY_PRICE_ASC_QUERY = defineQuery(
   `*[${PRODUCT_FILTER_CONDITIONS}] | order(price asc) ${FILTERED_PRODUCT_PROJECTION}`
 );
 
-/**
- * Filter products - ordered by price descending
- * Returns up to 4 images for hover preview in product cards
- */
 export const FILTER_PRODUCTS_BY_PRICE_DESC_QUERY = defineQuery(
   `*[${PRODUCT_FILTER_CONDITIONS}] | order(price desc) ${FILTERED_PRODUCT_PROJECTION}`
 );
@@ -230,10 +218,6 @@ export const PRODUCTS_BY_IDS_QUERY = defineQuery(`*[
   stock
 }`);
 
-/**
- * Get low stock products (admin)
- * Uses LOW_STOCK_THRESHOLD constant for consistency
- */
 export const LOW_STOCK_PRODUCTS_QUERY = defineQuery(`*[
   _type == "product"
   && stock > 0

@@ -52,9 +52,6 @@ export const ORDER_BY_ID_QUERY = defineQuery(`*[
   createdAt
 }`);
 
-/**
- * Get recent orders (for admin dashboard)
- */
 export const RECENT_ORDERS_QUERY = defineQuery(`*[
   _type == "order"
 ] | order(createdAt desc) [0...$limit] {

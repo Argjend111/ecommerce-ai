@@ -3,13 +3,9 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 interface EmptyStateProps {
-  /** Lucide icon to display */
   icon: LucideIcon;
-  /** Main title text */
   title: string;
-  /** Description text (optional) */
   description?: string;
-  /** Action button configuration (optional) */
   action?: {
     label: string;
     onClick?: () => void;
@@ -17,9 +13,7 @@ interface EmptyStateProps {
     disabled?: boolean;
     icon?: LucideIcon;
   };
-  /** Additional className for the container */
   className?: string;
-  /** Size variant */
   size?: "sm" | "default" | "lg";
 }
 
