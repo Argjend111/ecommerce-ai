@@ -1,4 +1,4 @@
-import { gateway, type Tool } from "ai";
+import { gateway, type Tool, ToolLoopAgent } from "ai";
 import { searchProductsTool } from "./tools/search-products";
 import { createGetMyOrdersTool } from "./tools/get-my-orders";
 
@@ -196,8 +196,9 @@ export function createShoppingAgent({ userId }: ShoppingAgentOptions) {
     tools.getMyOrders = getMyOrdersTool;
   }
 
-  return {
+  return new ToolLoopAgent({
+    model: gateway("anthropic/claude-sonnet-4.5"),
     instructions,
     tools,
-  };
+  });
 }
