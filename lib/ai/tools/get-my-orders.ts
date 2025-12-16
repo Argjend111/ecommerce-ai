@@ -61,7 +61,6 @@ export function createGetMyOrdersTool(userId: string | null) {
 
         console.log("[GetMyOrders] Orders found:", orders.length);
 
-        // Filter by status if provided
         let filteredOrders = orders as ORDERS_BY_USER_QUERYResult;
         if (status) {
           filteredOrders = filteredOrders.filter(

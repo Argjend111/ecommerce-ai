@@ -255,7 +255,6 @@ type OpenInStudioProps = {
   handle: DocumentHandle
 }
 
-// The exported component, pre-wrapped in Suspense
 export function OpenInStudio({ handle }: OpenInStudioProps) {
   return (
     <Suspense fallback={<OpenInStudioFallback />}>
