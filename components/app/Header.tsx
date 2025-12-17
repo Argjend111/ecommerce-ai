@@ -19,7 +19,7 @@ export function Header() {
 
         <Link href="/" className="flex items-center gap-2">
           <span className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
-            The Furniture Store
+            BalkanMarket
           </span>
         </Link>
 
