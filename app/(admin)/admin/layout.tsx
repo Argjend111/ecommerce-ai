@@ -84,7 +84,6 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
           )}
         >
           <div className="flex h-full flex-col">
-            {/* Logo */}
             <div className="flex h-16 items-center border-b border-zinc-200 px-6 dark:border-zinc-800">
               <Link
                 href="/admin"
