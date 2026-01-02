@@ -7,15 +7,16 @@ interface WelcomeScreenProps {
 
 const productSuggestions = [
   "Show me oak tables",
-  "Leather sofas under £1000",
-  "What chairs do you have?",
+  "Find leather sofas under £1,000",
+  "What chairs do you offer?",
 ];
 
 const orderSuggestions = [
-  "Where's my order?",
+  "Where is my order?",
   "Show me my recent orders",
-  "Has my order shipped?",
+  "Has my order been shipped?",
 ];
+
 
 export function WelcomeScreen({
   onSuggestionClick,
